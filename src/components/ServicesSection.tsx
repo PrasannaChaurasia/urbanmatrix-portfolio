@@ -11,11 +11,11 @@ export default function ServicesSection() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.querySelectorAll(".srv-card").forEach((el, i) => {
+            entry.target.querySelectorAll<HTMLElement>(".srv-item").forEach((el, i) => {
               setTimeout(() => {
-                (el as HTMLElement).style.opacity = "1";
-                (el as HTMLElement).style.transform = "translateY(0)";
-              }, i * 100);
+                el.style.opacity = "1";
+                el.style.transform = "translateY(0)";
+              }, i * 80);
             });
           }
         });
@@ -31,70 +31,112 @@ export default function ServicesSection() {
       ref={sectionRef}
       id="services"
       className="section-padding"
-      style={{
-        background: "var(--bg-secondary)",
-        borderTop: "1px solid var(--border)",
-      }}
+      style={{ background: "var(--bg-secondary)", borderTop: "1px solid var(--border)" }}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-screen-2xl mx-auto">
+
+        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <p className="text-xs tracking-[0.5em] uppercase mb-4" style={{ color: "var(--accent)" }}>
-              What I Do
-            </p>
-            <h2 className="text-4xl md:text-5xl font-extralight">
-              Core <span style={{ color: "var(--accent)" }}>Services</span>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-px w-8" style={{ background: "var(--accent)" }} />
+              <p className="text-xs tracking-[0.5em] uppercase" style={{ color: "var(--accent)" }}>
+                What I Do
+              </p>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extralight leading-tight">
+              Core{" "}
+              <span
+                style={{
+                  color: "transparent",
+                  WebkitTextStroke: "1px var(--accent)",
+                }}
+              >
+                Services
+              </span>
             </h2>
           </div>
-          <p className="text-sm max-w-sm" style={{ color: "var(--text-secondary)", lineHeight: "1.8" }}>
-            Delivering end-to-end architectural solutions — from parametric concept to BIM-compliant construction documentation.
+          <p
+            className="text-sm max-w-xs"
+            style={{ color: "var(--text-secondary)", lineHeight: "1.9" }}
+          >
+            End-to-end architectural solutions — from parametric concept to
+            BIM-compliant construction documentation.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: "var(--border)" }}>
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, i) => (
             <div
               key={service.id}
-              className="srv-card group p-8 transition-all duration-300"
+              className="srv-item srv-card group p-8 lg:p-10 transition-all duration-500"
               style={{
-                background: i % 2 === 0 ? "var(--bg-card)" : "var(--bg-primary)",
                 opacity: 0,
-                transform: "translateY(24px)",
-                transition: `opacity 0.6s ease, transform 0.6s ease, background 0.3s ease`,
+                transform: "translateY(32px)",
+                transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1), background 0.4s ease`,
+                background: "var(--bg-card)",
+                border: "1px solid var(--border)",
+                marginTop: "-1px",
+                marginLeft: "-1px",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.background = "rgba(200,169,110,0.04)";
+                (e.currentTarget as HTMLElement).style.background = "rgba(200,169,110,0.03)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.background =
-                  i % 2 === 0 ? "var(--bg-card)" : "var(--bg-primary)";
+                (e.currentTarget as HTMLElement).style.background = "var(--bg-card)";
               }}
             >
+              {/* Number */}
+              <div
+                className="text-xs tracking-[0.4em] uppercase mb-8 font-mono"
+                style={{ color: "var(--text-muted)" }}
+              >
+                0{i + 1}
+              </div>
+
               {/* Icon */}
               <div
-                className="text-3xl mb-6 transition-transform duration-300 group-hover:scale-110"
+                className="text-2xl mb-5 transition-transform duration-500 group-hover:scale-110"
                 style={{ color: "var(--accent)" }}
               >
                 {service.icon}
               </div>
 
               {/* Title */}
-              <h3 className="text-base font-light mb-3 tracking-wide">{service.title}</h3>
+              <h3
+                className="text-base font-light mb-4 leading-snug tracking-wide"
+                style={{ color: "var(--text-primary)" }}
+              >
+                {service.title}
+              </h3>
 
               {/* Description */}
-              <p className="text-sm mb-6" style={{ color: "var(--text-secondary)", lineHeight: "1.8" }}>
+              <p
+                className="text-sm mb-8 leading-relaxed"
+                style={{ color: "var(--text-secondary)", lineHeight: "1.85" }}
+              >
                 {service.description}
               </p>
 
               {/* Tools */}
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-2 mt-auto">
                 {service.tools.slice(0, 3).map((tool) => (
                   <span
                     key={tool}
-                    className="text-xs px-2 py-1"
+                    className="text-xs px-2.5 py-1 tracking-wider uppercase"
                     style={{
                       border: "1px solid var(--border)",
                       color: "var(--text-secondary)",
+                      transition: "border-color 0.3s ease, color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.borderColor = "var(--border-accent)";
+                      (e.currentTarget as HTMLElement).style.color = "var(--accent)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
+                      (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)";
                     }}
                   >
                     {tool}

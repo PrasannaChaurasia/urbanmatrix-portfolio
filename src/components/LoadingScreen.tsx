@@ -4,24 +4,26 @@ import { useEffect, useState } from "react";
 
 export default function LoadingScreen() {
   const [visible, setVisible] = useState(false);
-  const [leaving, setLeaving] = useState(false);
+  const [phase, setPhase] = useState<"in" | "hold" | "out">("in");
 
   useEffect(() => {
     const seen = sessionStorage.getItem("urbanmatrix_loaded");
     if (seen) return;
     setVisible(true);
-    const leaveTimer = setTimeout(() => setLeaving(true), 2800);
-    const hideTimer = setTimeout(() => {
+
+    const t1 = setTimeout(() => setPhase("hold"), 400);
+    const t2 = setTimeout(() => setPhase("out"), 2600);
+    const t3 = setTimeout(() => {
       setVisible(false);
       sessionStorage.setItem("urbanmatrix_loaded", "1");
-    }, 3500);
-    return () => {
-      clearTimeout(leaveTimer);
-      clearTimeout(hideTimer);
-    };
+    }, 3400);
+
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, []);
 
   if (!visible) return null;
+
+  const leaving = phase === "out";
 
   return (
     <div
@@ -29,13 +31,14 @@ export default function LoadingScreen() {
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        background: "#0a0a0a",
+        background: "#080808",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         transform: leaving ? "translateY(-100%)" : "translateY(0)",
-        transition: "transform 0.75s cubic-bezier(0.76, 0, 0.24, 1)",
+        transition: "transform 0.9s cubic-bezier(0.76, 0, 0.24, 1)",
+        overflow: "hidden",
       }}
     >
       {/* Blueprint grid */}
@@ -45,32 +48,76 @@ export default function LoadingScreen() {
           inset: 0,
           backgroundImage:
             "linear-gradient(rgba(200,169,110,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(200,169,110,0.04) 1px, transparent 1px)",
-          backgroundSize: "50px 50px",
+          backgroundSize: "80px 80px",
           opacity: leaving ? 0 : 1,
-          transition: "opacity 0.4s ease",
+          transition: "opacity 0.5s ease",
         }}
       />
 
+      {/* Radial glow */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(200,169,110,0.05) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Corner brackets */}
+      {[
+        { top: 40, left: 40, borderTop: "1px solid", borderLeft: "1px solid" },
+        { top: 40, right: 40, borderTop: "1px solid", borderRight: "1px solid" },
+        { bottom: 40, left: 40, borderBottom: "1px solid", borderLeft: "1px solid" },
+        { bottom: 40, right: 40, borderBottom: "1px solid", borderRight: "1px solid" },
+      ].map((style, i) => (
+        <div
+          key={i}
+          style={{
+            position: "absolute",
+            width: 32,
+            height: 32,
+            borderColor: "rgba(200,169,110,0.25)",
+            opacity: leaving ? 0 : 1,
+            transition: "opacity 0.3s ease",
+            ...style,
+          }}
+        />
+      ))}
+
       {/* Center content */}
-      <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+      <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "0 24px" }}>
         {/* Animated diamond */}
         <div
           style={{
-            width: 60,
-            height: 60,
-            border: "1.5px solid #c8a96e",
+            width: 56,
+            height: 56,
+            border: "1px solid rgba(200,169,110,0.6)",
             transform: "rotate(45deg)",
-            margin: "0 auto 32px",
-            animation: "diamondPulse 2s ease infinite",
+            margin: "0 auto 40px",
+            animation: "diamondPulse 2.4s ease-in-out infinite",
             opacity: leaving ? 0 : 1,
             transition: "opacity 0.3s ease",
+            position: "relative",
           }}
         >
           <div
             style={{
               position: "absolute",
-              inset: 10,
-              border: "1px solid rgba(200,169,110,0.3)",
+              inset: 8,
+              border: "1px solid rgba(200,169,110,0.2)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              width: 4,
+              height: 4,
+              background: "var(--accent, #c8a96e)",
+              borderRadius: "50%",
+              transform: "translate(-50%, -50%) rotate(-45deg)",
             }}
           />
         </div>
@@ -79,40 +126,40 @@ export default function LoadingScreen() {
         <h1
           style={{
             fontFamily: "var(--font-geist-sans), sans-serif",
-            fontSize: "clamp(24px, 5vw, 42px)",
+            fontSize: "clamp(20px, 4vw, 36px)",
             fontWeight: 200,
-            letterSpacing: "0.35em",
-            color: "#f0ece4",
-            marginBottom: 12,
+            letterSpacing: "0.45em",
+            color: "#ece4e1",
+            marginBottom: 10,
             textTransform: "uppercase",
-            animation: "fadeInUp 0.8s 0.3s both ease",
+            animation: "fadeInUp 0.9s 0.3s cubic-bezier(0.16,1,0.3,1) both",
           }}
         >
           Prasanna Chaurasia
         </h1>
 
-        {/* Subtitle */}
+        {/* Tag */}
         <p
           style={{
             fontFamily: "var(--font-geist-mono), monospace",
-            fontSize: "11px",
-            letterSpacing: "0.5em",
+            fontSize: "10px",
+            letterSpacing: "0.55em",
             color: "#c8a96e",
             textTransform: "uppercase",
-            marginBottom: 48,
-            animation: "fadeInUp 0.8s 0.6s both ease",
+            marginBottom: 52,
+            animation: "fadeInUp 0.9s 0.55s cubic-bezier(0.16,1,0.3,1) both",
           }}
         >
-          Urbanmetrics · Architecture & AI
+          Architecture · BIM · AI
         </p>
 
         {/* Progress bar */}
         <div
           style={{
-            width: 200,
+            width: 180,
             height: 1,
-            background: "rgba(200,169,110,0.15)",
-            margin: "0 auto",
+            background: "rgba(200,169,110,0.12)",
+            margin: "0 auto 16px",
             position: "relative",
             overflow: "hidden",
           }}
@@ -123,24 +170,37 @@ export default function LoadingScreen() {
               top: 0,
               left: 0,
               height: "100%",
-              background: "#c8a96e",
-              animation: "loadBar 2.4s 0.2s both cubic-bezier(0.4,0,0.2,1)",
+              background: "linear-gradient(90deg, transparent, #c8a96e)",
+              animation: "loadBar 2.2s 0.2s cubic-bezier(0.4, 0, 0.2, 1) both",
             }}
           />
         </div>
+
+        <p
+          style={{
+            fontFamily: "var(--font-geist-mono), monospace",
+            fontSize: "9px",
+            letterSpacing: "0.4em",
+            color: "rgba(200,169,110,0.4)",
+            textTransform: "uppercase",
+            animation: "fadeInUp 0.9s 0.7s cubic-bezier(0.16,1,0.3,1) both",
+          }}
+        >
+          Loading Portfolio
+        </p>
       </div>
 
       <style>{`
         @keyframes diamondPulse {
           0%, 100% { transform: rotate(45deg) scale(1); opacity: 1; }
-          50% { transform: rotate(45deg) scale(1.08); opacity: 0.7; }
+          50% { transform: rotate(45deg) scale(1.1); opacity: 0.5; }
         }
         @keyframes loadBar {
           from { width: 0; }
           to { width: 100%; }
         }
         @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(20px); }
+          from { opacity: 0; transform: translateY(24px); }
           to { opacity: 1; transform: translateY(0); }
         }
       `}</style>

@@ -1,14 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #111111;
-  --bg-card: #161616;
+  --bg-primary: #080808;
+  --bg-secondary: #0d0d0d;
+  --bg-card: #111111;
   --accent: #c8a96e;
-  --accent-light: #e2c898;
-  --text-primary: #f0ece4;
-  --text-secondary: #9a9590;
-  --border: #2a2a2a;
+  --accent-light: #dfc08a;
+  --accent-dim: rgba(200, 169, 110, 0.1);
+  --text-primary: #ece4e1;
+  --text-secondary: #6b6560;
+  --text-muted: #2e2a27;
+  --border: #1a1a1a;
+  --border-accent: rgba(200, 169, 110, 0.12);
 }
 
 @theme inline {
@@ -18,8 +21,12 @@
   --font-mono: var(--font-geist-mono);
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
@@ -31,6 +38,7 @@ body {
   color: var(--text-primary);
   font-family: var(--font-sans), Arial, sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
@@ -38,36 +46,198 @@ body {
   color: var(--bg-primary);
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 2px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--accent);
-  border-radius: 3px;
 }
 
-/* Section spacing */
+/* ─── Section spacing ─────────────────────────────────── */
 .section-padding {
-  padding: 5rem 1.5rem;
+  padding: 6rem 1.5rem;
 }
-
 @media (min-width: 768px) {
   .section-padding {
-    padding: 7rem 3rem;
+    padding: 8rem 3rem;
   }
 }
-
 @media (min-width: 1280px) {
   .section-padding {
-    padding: 8rem 6rem;
+    padding: 10rem 6rem;
   }
 }
 
-/* Animated underline */
+/* ─── Blueprint grid ──────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(200, 169, 110, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 169, 110, 0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* ─── Marquee ─────────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Fade in up ──────────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─── Line draw ───────────────────────────────────────── */
+@keyframes drawLine {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.draw-line {
+  transform-origin: left;
+  animation: drawLine 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─── Ken Burns ───────────────────────────────────────── */
+@keyframes kenBurns {
+  0%   { transform: scale(1.05) translate(0, 0); }
+  50%  { transform: scale(1.1) translate(-1%, -0.5%); }
+  100% { transform: scale(1.05) translate(0, 0); }
+}
+
+/* ─── Diamond pulse ───────────────────────────────────── */
+@keyframes diamondPulse {
+  0%, 100% { transform: rotate(45deg) scale(1); opacity: 1; }
+  50%       { transform: rotate(45deg) scale(1.1); opacity: 0.6; }
+}
+
+/* ─── Load bar ────────────────────────────────────────── */
+@keyframes loadBar {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+/* ─── Skill bar ───────────────────────────────────────── */
+@keyframes fillBar {
+  from { width: 0; }
+  to   { width: var(--target-width); }
+}
+
+/* ─── Pulse dot ───────────────────────────────────────── */
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+  50%       { opacity: 0.6; box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+}
+
+/* ─── Float ───────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ─── Scroll reveal ───────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Stagger delays ──────────────────────────────────── */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+.delay-400 { transition-delay: 0.4s; }
+.delay-500 { transition-delay: 0.5s; }
+.delay-600 { transition-delay: 0.6s; }
+
+/* ─── Project card ────────────────────────────────────── */
+.project-card {
+  overflow: hidden;
+  position: relative;
+}
+.project-card .card-img {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.project-card:hover .card-img {
+  transform: scale(1.06);
+}
+.project-card .card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.3) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.project-card:hover .card-overlay {
+  opacity: 1;
+}
+.project-card .card-reveal {
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.5s ease;
+}
+.project-card:hover .card-reveal {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ─── Ghost number ────────────────────────────────────── */
+.ghost-num {
+  font-size: clamp(80px, 12vw, 160px);
+  font-weight: 100;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-muted);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ─── Service card hover line ─────────────────────────── */
+.srv-card {
+  position: relative;
+}
+.srv-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.srv-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* ─── Animated link underline ─────────────────────────── */
 .link-underline {
   position: relative;
 }
@@ -79,47 +249,17 @@ body {
   width: 0;
   height: 1px;
   background: var(--accent);
-  transition: width 0.3s ease;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .link-underline:hover::after {
   width: 100%;
 }
 
-/* Grid lines background */
-.grid-bg {
-  background-image:
-    linear-gradient(rgba(200, 169, 110, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200, 169, 110, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
+/* ─── Clip text reveal ────────────────────────────────── */
+@keyframes clipReveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
 }
-
-/* Project card hover */
-.project-card {
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-.project-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(200, 169, 110, 0.12);
-}
-
-/* Skill bar animation */
-@keyframes fillBar {
-  from { width: 0; }
-  to { width: var(--target-width); }
-}
-
-/* Fade in animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.7s ease forwards;
+.clip-reveal {
+  animation: clipReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
