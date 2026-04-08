@@ -5,6 +5,8 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+const URBAN_MATRIX_URL = "https://1d2f3400-a9fd-4c75-8953-7f0bc53e1c77-00-pbp5ujucns3n.kirk.replit.dev/";
+
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
@@ -112,7 +114,31 @@ export default function Navbar() {
           </ul>
 
           {/* Right — status + mobile toggle */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {/* Urban Matrix company link */}
+            <a
+              href={URBAN_MATRIX_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden lg:flex items-center gap-2 px-3 py-1.5 text-xs tracking-[0.2em] uppercase transition-all duration-300"
+              style={{
+                border: "1px solid var(--border-accent)",
+                background: "rgba(200,169,110,0.05)",
+                color: "var(--accent)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.background = "rgba(200,169,110,0.14)";
+                (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.background = "rgba(200,169,110,0.05)";
+                (e.currentTarget as HTMLElement).style.borderColor = "var(--border-accent)";
+              }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--accent)" }} />
+              Urban Matrix ↗
+            </a>
+
             <div
               className="hidden lg:flex items-center gap-2 px-3 py-1.5 text-xs tracking-[0.2em] uppercase"
               style={{
@@ -184,7 +210,24 @@ export default function Navbar() {
                 transition: `opacity 0.4s ease ${navLinks.length * 0.05}s`,
               }}
             >
-              <div className="flex items-center gap-2 text-xs tracking-[0.2em] uppercase pt-2" style={{ borderTop: "1px solid var(--border)", paddingTop: "1rem" }}>
+              <a
+                href={URBAN_MATRIX_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-sm tracking-[0.2em] uppercase"
+                style={{ color: "var(--accent)" }}
+              >
+                <span className="w-4 h-px" style={{ background: "var(--accent)" }} />
+                Urban Matrix ↗
+              </a>
+            </li>
+            <li
+              style={{
+                opacity: menuOpen ? 1 : 0,
+                transition: `opacity 0.4s ease ${(navLinks.length + 1) * 0.05}s`,
+              }}
+            >
+              <div className="flex items-center gap-2 text-xs tracking-[0.2em] uppercase" style={{ borderTop: "1px solid var(--border)", paddingTop: "1rem" }}>
                 <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#4ade80", animation: "pulseDot 2.5s infinite" }} />
                 <span style={{ color: "var(--accent)" }}>Open to Work</span>
               </div>

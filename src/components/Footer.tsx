@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 
+const URBAN_MATRIX_URL = "https://1d2f3400-a9fd-4c75-8953-7f0bc53e1c77-00-pbp5ujucns3n.kirk.replit.dev/";
+
 const footerLinks = [
   { label: "About", href: "/about" },
   { label: "Projects", href: "/projects" },
@@ -23,7 +25,7 @@ export default function Footer() {
     >
       {/* Top row */}
       <div
-        className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10"
+        className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
         style={{ borderBottom: "1px solid var(--border)" }}
       >
         {/* Brand */}
@@ -67,6 +69,49 @@ export default function Footer() {
               </li>
             ))}
           </ul>
+        </div>
+
+        {/* Urban Matrix */}
+        <div>
+          <p className="text-xs tracking-[0.4em] uppercase mb-5" style={{ color: "var(--text-secondary)" }}>
+            Company
+          </p>
+          <a
+            href={URBAN_MATRIX_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-start gap-3 p-4 mb-6 transition-all duration-300"
+            style={{
+              border: "1px solid var(--border-accent)",
+              background: "rgba(200,169,110,0.03)",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.background = "rgba(200,169,110,0.08)";
+              (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.background = "rgba(200,169,110,0.03)";
+              (e.currentTarget as HTMLElement).style.borderColor = "var(--border-accent)";
+            }}
+          >
+            <div
+              className="w-8 h-8 flex items-center justify-center flex-shrink-0 mt-0.5"
+              style={{ border: "1px solid var(--border-accent)" }}
+            >
+              <div
+                className="w-3 h-3 border rotate-45"
+                style={{ borderColor: "var(--accent)" }}
+              />
+            </div>
+            <div>
+              <p className="text-xs tracking-[0.3em] uppercase mb-1" style={{ color: "var(--accent)" }}>
+                Urban Matrix ↗
+              </p>
+              <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)", lineHeight: "1.7" }}>
+                Architecture & Design Studio — Visit our company website
+              </p>
+            </div>
+          </a>
         </div>
 
         {/* Contact */}
