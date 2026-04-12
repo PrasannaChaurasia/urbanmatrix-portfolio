@@ -56,7 +56,7 @@ export default function Contact() {
               {[
                 { icon: Mail, label: "Email", value: "pc.urbanmatrix12@gmail.com" },
                 { icon: Phone, label: "Phone", value: "+44 7776 361383" },
-                { icon: MapPin, label: "Location", value: "Nottingham, United Kingdom" },
+                { icon: MapPin, label: "Location", value: "Manchester, United Kingdom" },
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="flex items-center gap-4">
                   <div

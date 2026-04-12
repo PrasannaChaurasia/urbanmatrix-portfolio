@@ -189,17 +189,17 @@ export default function CtaBanner() {
             }}
           >
             <a
-              href="mailto:prasanna.subx@gmail.com"
+              href="mailto:pc.urbanmatrix12@gmail.com"
               className="text-xs tracking-[0.25em] uppercase transition-colors duration-300"
               style={{ color: "var(--text-secondary)" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
             >
-              prasanna.subx@gmail.com
+              pc.urbanmatrix12@gmail.com
             </a>
             <div className="w-1 h-1 rounded-full" style={{ background: "var(--border)" }} />
             <span className="text-xs tracking-[0.25em] uppercase" style={{ color: "var(--text-secondary)" }}>
-              Nottingham, United Kingdom
+              Manchester, United Kingdom
             </span>
             <div className="w-1 h-1 rounded-full hidden sm:block" style={{ background: "var(--border)" }} />
             <div className="flex items-center gap-2 text-xs" style={{ color: "var(--text-secondary)" }}>

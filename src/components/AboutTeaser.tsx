@@ -145,7 +145,7 @@ export default function AboutTeaser() {
             <div className="flex flex-col gap-3 mb-10">
               {[
                 "ISO 19650 BIM Certified Professional",
-                "MSc Architecture — University of Nottingham",
+                "MA Architecture & Urbanism — Manchester Metropolitan University",
                 "Global Design Competition Winner",
                 "AI-Driven Architectural Workflows Specialist",
               ].map((cred) => (

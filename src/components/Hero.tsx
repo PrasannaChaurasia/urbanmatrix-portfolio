@@ -3,11 +3,77 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowDown } from "lucide-react";
 
+function ParticleCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let raf: number;
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const particles = Array.from({ length: 65 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 1.4 + 0.2,
+      speed: Math.random() * 0.25 + 0.08,
+      opacity: Math.random() * 0.35 + 0.08,
+      drift: (Math.random() - 0.5) * 0.25,
+    }));
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(200,169,110,${p.opacity})`;
+        ctx.fill();
+
+        p.y -= p.speed;
+        p.x += p.drift;
+        p.opacity += (Math.random() - 0.5) * 0.008;
+        p.opacity = Math.max(0.04, Math.min(0.45, p.opacity));
+
+        if (p.y < -4) {
+          p.y = canvas.height + 4;
+          p.x = Math.random() * canvas.width;
+        }
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+      });
+      raf = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none"
+      style={{ opacity: 0.55 }}
+    />
+  );
+}
+
 const tools = [
-  "Revit", "AutoCAD", "Rhino 3D", "Grasshopper", "Navisworks",
+  "Revit", "AutoCAD", "Rhino 3D", "Computational Design", "Navisworks",
   "BIM 360", "Dynamo", "SketchUp", "Lumion", "Enscape",
   "Python", "ISO 19650", "Parametric Design", "AI Workflows", "Civil 3D",
-  "Revit", "AutoCAD", "Rhino 3D", "Grasshopper", "Navisworks",
+  "Revit", "AutoCAD", "Rhino 3D", "Computational Design", "Navisworks",
   "BIM 360", "Dynamo", "SketchUp", "Lumion", "Enscape",
   "Python", "ISO 19650", "Parametric Design", "AI Workflows", "Civil 3D",
 ];
@@ -41,6 +107,9 @@ export default function Hero() {
       className="relative min-h-screen flex flex-col overflow-hidden"
       style={{ background: "var(--bg-primary)" }}
     >
+      {/* Floating gold particles */}
+      <ParticleCanvas />
+
       {/* Animated blueprint grid */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -100,7 +169,7 @@ export default function Hero() {
           className="text-xs tracking-[0.3em] uppercase"
           style={{ color: "var(--text-secondary)" }}
         >
-          Nottingham, UK
+          Manchester, UK
         </span>
       </div>
 

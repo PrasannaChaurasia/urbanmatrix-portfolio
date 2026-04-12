@@ -16,18 +16,18 @@ const experience = [
   },
   {
     role: "Front Desk Administrator (NHS) | Business Support",
-    company: "NHS The Om Surgery | Nottingham, United Kingdom",
+    company: "NHS The Om Surgery | United Kingdom",
     period: "07/2025 – Present",
     points: [
-      "Managed stakeholder correspondence with architects, engineers, contractors, and suppliers",
-      "Proactively managed projects achieving quality, schedule, budget, and safety targets — 20% faster than industry standards",
-      "Incorporated Revit BIM workflows (LOD 300–500), pyRevit automation scripts, and DiRoots plugins",
-      "Improved overall budget compliance by 25% and reduced cost overruns",
+      "Managed patient-facing front desk operations, appointment scheduling, and administrative workflows",
+      "Coordinated communications between clinical staff, patients, and external stakeholders",
+      "Maintained accurate records and ensured compliance with NHS data handling and privacy protocols",
+      "Provided business support across scheduling, documentation, and operational reporting",
     ],
   },
   {
     role: "Co-founder & Design Head",
-    company: "The Sapphire Infrastructures India | Indore, India",
+    company: "The Sapphire Infrastructures India",
     period: "10/2021 – 08/2023",
     points: [
       "Led design and delivery across residential, commercial, industrial, and healthcare unit projects",
@@ -38,7 +38,7 @@ const experience = [
   },
   {
     role: "Civil Designer",
-    company: "JS Infrastructures | Neemach, India",
+    company: "JS Infrastructures | India",
     period: "01/2021 – 10/2021",
     points: [
       "Prepared high-quality engineering drawings in AutoCAD and Revit, reducing revision cycles",
@@ -48,7 +48,7 @@ const experience = [
   },
   {
     role: "Site Engineer",
-    company: "Metastruct Infratech INDIA Pvt. Ltd. | Indore",
+    company: "Metastruct Infratech INDIA Pvt. Ltd.",
     period: "08/2019 – 09/2020",
     points: [
       "Implemented AI-enabled dashboards and BIM scheduling via Revit and Primavera P6",
@@ -58,7 +58,7 @@ const experience = [
   },
   {
     role: "Project Engineer",
-    company: "Shivansh Infra and Construction | Indore, India",
+    company: "Shivansh Infra and Construction | India",
     period: "07/2018 – 08/2019",
     points: [
       "Coordinated mixed-use development projects with AutoCAD and Revit BIM (RIBA Stage 3–4)",
@@ -83,13 +83,13 @@ const education = [
   },
   {
     degree: "Masters in Technology | Construction Planning & Management",
-    school: "IPS Academy, Institute of Engineering and Science, India",
+    school: "IPS Academy, Institute of Engineering and Science",
     period: "Aug 2018 – Dec 2022",
     note: "Construction Planning and Management",
   },
   {
     degree: "Bachelors of Engineering | Civil Engineering",
-    school: "IPS Academy, Institute of Engineering and Science, India",
+    school: "IPS Academy, Institute of Engineering and Science",
     period: "Aug 2014 – Jun 2018",
     note: "Civil Engineering",
   },

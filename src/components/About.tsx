@@ -44,19 +44,69 @@ export default function About() {
             }}
           >
             <div
-              className="w-full h-full"
+              className="w-full h-full relative overflow-hidden"
               style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}
             >
-              <div className="w-full h-full flex flex-col items-center justify-center gap-3">
+              {/* Blueprint grid background */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(rgba(200,169,110,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(200,169,110,0.05) 1px, transparent 1px)",
+                  backgroundSize: "40px 40px",
+                }}
+              />
+              {/* Radial glow */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: "radial-gradient(ellipse 70% 60% at 50% 45%, rgba(200,169,110,0.07) 0%, transparent 70%)",
+                }}
+              />
+              {/* Initials mark */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
                 <div
-                  className="w-16 h-16 rounded-full"
-                  style={{ background: "var(--bg-secondary)", border: "1px solid var(--border)" }}
-                />
-                <p
-                  className="text-xs tracking-widest uppercase"
-                  style={{ color: "var(--text-secondary)" }}
+                  className="relative flex items-center justify-center"
+                  style={{ width: 100, height: 100, border: "1px solid rgba(200,169,110,0.3)" }}
                 >
-                  Prasanna Chaurasia
+                  <div
+                    className="absolute inset-3"
+                    style={{ border: "1px solid rgba(200,169,110,0.12)" }}
+                  />
+                  <span
+                    className="font-extralight"
+                    style={{ fontSize: 36, color: "var(--accent)", letterSpacing: "0.12em" }}
+                  >
+                    PC
+                  </span>
+                </div>
+                <div className="text-center">
+                  <p
+                    className="text-xs tracking-[0.45em] uppercase mb-1"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    Prasanna Chaurasia
+                  </p>
+                  <p
+                    className="text-xs tracking-[0.3em] uppercase"
+                    style={{ color: "var(--accent)", opacity: 0.7 }}
+                  >
+                    BIM Architect · AI Enthusiast
+                  </p>
+                </div>
+              </div>
+              {/* Corner brackets */}
+              <div className="absolute top-4 left-4 w-5 h-5" style={{ borderTop: "1px solid rgba(200,169,110,0.4)", borderLeft: "1px solid rgba(200,169,110,0.4)" }} />
+              <div className="absolute top-4 right-4 w-5 h-5" style={{ borderTop: "1px solid rgba(200,169,110,0.4)", borderRight: "1px solid rgba(200,169,110,0.4)" }} />
+              <div className="absolute bottom-4 left-4 w-5 h-5" style={{ borderBottom: "1px solid rgba(200,169,110,0.4)", borderLeft: "1px solid rgba(200,169,110,0.4)" }} />
+              <div className="absolute bottom-4 right-4 w-5 h-5" style={{ borderBottom: "1px solid rgba(200,169,110,0.4)", borderRight: "1px solid rgba(200,169,110,0.4)" }} />
+              {/* Photo placeholder label */}
+              <div
+                className="absolute bottom-8 left-0 right-0 text-center"
+                style={{ borderTop: "1px solid var(--border)", paddingTop: "12px", marginLeft: "24px", marginRight: "24px" }}
+              >
+                <p className="text-xs tracking-[0.35em] uppercase" style={{ color: "var(--text-secondary)", opacity: 0.5 }}>
+                  Photo — Coming Soon
                 </p>
               </div>
             </div>

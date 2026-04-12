@@ -41,7 +41,7 @@ export default function Footer() {
           </Link>
           <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)", lineHeight: "1.8" }}>
             BIM Architect · AI Enthusiast<br />
-            Nottingham, United Kingdom
+            Manchester, United Kingdom
           </p>
           <div className="flex items-center gap-2 mt-4 text-xs" style={{ color: "var(--accent)" }}>
             <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#4ade80" }} />
@@ -156,7 +156,7 @@ export default function Footer() {
       {/* Bottom row */}
       <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
         <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
-          © {year} Prasanna Chaurasia · Urbanmetrics. All rights reserved.
+          © {year} Prasanna Chaurasia · Urbanmatrix. All rights reserved.
         </p>
         <p className="text-xs" style={{ color: "var(--text-secondary)", opacity: 0.4 }}>
           Built with Next.js · Deployed on Vercel

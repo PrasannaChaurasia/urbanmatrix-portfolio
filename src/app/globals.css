@@ -263,3 +263,17 @@ body {
 .clip-reveal {
   animation: clipReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* ─── Audio bar (ambient player) ─────────────────────── */
+@keyframes audioBar {
+  from { transform: scaleY(0.4); }
+  to   { transform: scaleY(1.2); }
+}
+
+/* ─── Particle float ──────────────────────────────────── */
+@keyframes particleFloat {
+  0%   { transform: translateY(0px) translateX(0px); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-120vh) translateX(var(--drift, 20px)); opacity: 0; }
+}
