@@ -47,68 +47,35 @@ export default function About() {
               className="w-full h-full relative overflow-hidden"
               style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}
             >
-              {/* Blueprint grid background */}
+                {/* Illustrated portrait */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/about/prasanna-portrait.png"
+                alt="Prasanna Chaurasia"
+                className="w-full h-full object-cover"
+                style={{ objectPosition: "80% center" }}
+              />
+              {/* Gold overlay tint */}
               <div
                 className="absolute inset-0"
                 style={{
-                  backgroundImage:
-                    "linear-gradient(rgba(200,169,110,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(200,169,110,0.05) 1px, transparent 1px)",
-                  backgroundSize: "40px 40px",
+                  background: "linear-gradient(to top, rgba(8,8,8,0.65) 0%, transparent 50%)",
                 }}
               />
-              {/* Radial glow */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: "radial-gradient(ellipse 70% 60% at 50% 45%, rgba(200,169,110,0.07) 0%, transparent 70%)",
-                }}
-              />
-              {/* Initials mark */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
-                <div
-                  className="relative flex items-center justify-center"
-                  style={{ width: 100, height: 100, border: "1px solid rgba(200,169,110,0.3)" }}
-                >
-                  <div
-                    className="absolute inset-3"
-                    style={{ border: "1px solid rgba(200,169,110,0.12)" }}
-                  />
-                  <span
-                    className="font-extralight"
-                    style={{ fontSize: 36, color: "var(--accent)", letterSpacing: "0.12em" }}
-                  >
-                    PC
-                  </span>
-                </div>
-                <div className="text-center">
-                  <p
-                    className="text-xs tracking-[0.45em] uppercase mb-1"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    Prasanna Chaurasia
-                  </p>
-                  <p
-                    className="text-xs tracking-[0.3em] uppercase"
-                    style={{ color: "var(--accent)", opacity: 0.7 }}
-                  >
-                    BIM Architect · AI Enthusiast
-                  </p>
-                </div>
-              </div>
-              {/* Corner brackets */}
-              <div className="absolute top-4 left-4 w-5 h-5" style={{ borderTop: "1px solid rgba(200,169,110,0.4)", borderLeft: "1px solid rgba(200,169,110,0.4)" }} />
-              <div className="absolute top-4 right-4 w-5 h-5" style={{ borderTop: "1px solid rgba(200,169,110,0.4)", borderRight: "1px solid rgba(200,169,110,0.4)" }} />
-              <div className="absolute bottom-4 left-4 w-5 h-5" style={{ borderBottom: "1px solid rgba(200,169,110,0.4)", borderLeft: "1px solid rgba(200,169,110,0.4)" }} />
-              <div className="absolute bottom-4 right-4 w-5 h-5" style={{ borderBottom: "1px solid rgba(200,169,110,0.4)", borderRight: "1px solid rgba(200,169,110,0.4)" }} />
-              {/* Photo placeholder label */}
-              <div
-                className="absolute bottom-8 left-0 right-0 text-center"
-                style={{ borderTop: "1px solid var(--border)", paddingTop: "12px", marginLeft: "24px", marginRight: "24px" }}
-              >
-                <p className="text-xs tracking-[0.35em] uppercase" style={{ color: "var(--text-secondary)", opacity: 0.5 }}>
-                  Photo — Coming Soon
+              {/* Name tag bottom */}
+              <div className="absolute bottom-6 left-6 right-6">
+                <p className="text-xs tracking-[0.45em] uppercase mb-1" style={{ color: "var(--accent)" }}>
+                  Prasanna Chaurasia
+                </p>
+                <p className="text-xs tracking-[0.3em] uppercase" style={{ color: "rgba(236,228,225,0.6)" }}>
+                  BIM Architect · AI Enthusiast
                 </p>
               </div>
+              {/* Corner brackets */}
+              <div className="absolute top-4 left-4 w-5 h-5" style={{ borderTop: "1px solid rgba(200,169,110,0.5)", borderLeft: "1px solid rgba(200,169,110,0.5)" }} />
+              <div className="absolute top-4 right-4 w-5 h-5" style={{ borderTop: "1px solid rgba(200,169,110,0.5)", borderRight: "1px solid rgba(200,169,110,0.5)" }} />
+              <div className="absolute bottom-4 left-4 w-5 h-5" style={{ borderBottom: "1px solid rgba(200,169,110,0.5)", borderLeft: "1px solid rgba(200,169,110,0.5)" }} />
+              <div className="absolute bottom-4 right-4 w-5 h-5" style={{ borderBottom: "1px solid rgba(200,169,110,0.5)", borderRight: "1px solid rgba(200,169,110,0.5)" }} />
             </div>
             <div
               className="absolute -bottom-4 -right-4 w-full h-full border pointer-events-none"
@@ -151,21 +118,32 @@ export default function About() {
                 className="leading-relaxed"
                 style={{ color: "var(--text-secondary)", lineHeight: "1.9" }}
               >
-                I am a Multidisciplinary BIM Architect and Civil Engineer with extensive
-                experience delivering complex building and infrastructure projects across
-                India and the UK. Skilled in BIM coordination, parametric modelling, and
-                digital project delivery aligned with RIBA stages and UK building regulations.
+                A forward-thinking professional with a multifaceted expertise spanning civil
+                engineering, architectural design, and urbanism — shaped by an interdisciplinary
+                approach, integrating structural precision, project execution, and urban strategy
+                to craft sustainable, functional, and aesthetically refined spaces.
               </p>
               <p
                 className="leading-relaxed"
                 style={{ color: "var(--text-secondary)", lineHeight: "1.9" }}
               >
-                Proficient in Revit BIM (with pyRevit, DiRoots, Blocks, BIMLogiq),
-                Navisworks, AutoCAD, Rhino &amp; Grasshopper, integrating both conventional
-                and AI-driven workflows to optimise design, collaboration, and delivery.
-                Recognised as a <span style={{ color: "var(--accent)" }}>global competition
-                winner</span> (xFigura, Futurly) for excellence in integrating AI workflows
-                into architectural design.
+                With over six years of hands-on experience across engineering, project execution,
+                and architectural design, I have led, designed, and executed a diverse range of
+                projects — high-end residential, commercial ventures, industrial facilities, and
+                large-scale urban planning initiatives. My proficiency in cutting-edge design tools,
+                parametric modelling, AI-assisted workflows, and BIM integration positions me at
+                the forefront of the industry, earning recognition as a{" "}
+                <span style={{ color: "var(--accent)" }}>global competition winner</span>{" "}
+                (xFigura, Futurly) for excellence in AI-integrated architectural design.
+              </p>
+              <p
+                className="leading-relaxed"
+                style={{ color: "var(--text-secondary)", lineHeight: "1.9" }}
+              >
+                My design philosophy is rooted in the seamless intersection of architecture and
+                engineering, where structural integrity meets artistic expression — ensuring every
+                project is executed with efficiency, environmental consciousness, and future-ready
+                adaptability.
               </p>
             </div>
 
@@ -181,7 +159,7 @@ export default function About() {
             >
               {[
                 { value: "6+", label: "Years Experience" },
-                { value: "15+", label: "Projects Delivered" },
+                { value: "100+", label: "Projects Delivered" },
                 { value: "30+", label: "Software & AI Tools" },
               ].map((stat) => (
                 <div key={stat.label}>

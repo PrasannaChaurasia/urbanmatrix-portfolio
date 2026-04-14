@@ -63,22 +63,41 @@ export default async function ProjectDetailPage({
         </div>
       </section>
 
-      {/* Image placeholder */}
+      {/* Hero image */}
       <section style={{ borderBottom: "1px solid var(--border)" }}>
         <div
-          className="w-full flex items-center justify-center relative overflow-hidden"
-          style={{ height: "50vh", background: "var(--bg-card)" }}
+          className="w-full relative overflow-hidden"
+          style={{ height: "60vh", background: "var(--bg-card)" }}
         >
-          <div className="absolute inset-0 grid-bg opacity-30" />
-          <div className="text-center relative z-10">
-            <div
-              className="w-16 h-16 border rotate-45 mx-auto mb-4"
-              style={{ borderColor: "var(--accent)", opacity: 0.4 }}
+          {project.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover"
+              style={{ objectPosition: "center 30%" }}
             />
-            <p className="text-xs tracking-widest uppercase" style={{ color: "var(--text-secondary)" }}>
-              Project Images — Drop your files into /public/projects/
-            </p>
-          </div>
+          ) : (
+            <>
+              <div className="absolute inset-0 grid-bg opacity-30" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <div
+                    className="w-16 h-16 border rotate-45 mx-auto mb-4"
+                    style={{ borderColor: "var(--accent)", opacity: 0.4 }}
+                  />
+                  <p className="text-xs tracking-widest uppercase" style={{ color: "var(--text-secondary)" }}>
+                    {project.title}
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
+          {/* Bottom gradient fade */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+            style={{ background: "linear-gradient(to bottom, transparent, var(--bg-primary))" }}
+          />
         </div>
       </section>
 

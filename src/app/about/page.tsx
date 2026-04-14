@@ -9,7 +9,7 @@ export default function AboutPage() {
         label="About Me"
         title="Bridging Design,"
         highlight="Technology & Innovation"
-        subtitle="Multidisciplinary BIM Architect and Civil Engineer with extensive experience across India and the UK — ISO 19650 certified, global competition winner, AI enthusiast."
+        subtitle="Multidisciplinary BIM Architect and Civil Engineer with extensive global experience — ISO 19650 certified, global competition winner, AI enthusiast."
       />
       <About />
       <CtaBanner />
