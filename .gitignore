@@ -7,3 +7,10 @@ out/
 dist/
 *.log
 .DS_Store
+
+.vercel
+
+# Local PDF source files and extracted assets (kept local, not in repo)
+public/editing/
+scripts/
+tsconfig.tsbuildinfo
