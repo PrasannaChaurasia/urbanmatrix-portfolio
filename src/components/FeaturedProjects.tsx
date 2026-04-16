@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { getFeaturedProjects } from "@/data/projects";
 import { useEffect, useRef } from "react";
@@ -95,11 +96,13 @@ export default function FeaturedProjects() {
                 style={{ aspectRatio: "4/3", background: "var(--bg-secondary)" }}
               >
                 {project.image ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={project.image}
                     alt={project.title}
-                    className="card-img w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="card-img object-cover"
+                    loading="lazy"
                   />
                 ) : (
                   <div className="card-img w-full h-full flex items-center justify-center relative overflow-hidden">

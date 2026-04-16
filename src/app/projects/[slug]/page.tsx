@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { getProjectBySlug, projects } from "@/data/projects";
 
@@ -70,12 +71,14 @@ export default async function ProjectDetailPage({
           style={{ height: "60vh", background: "var(--bg-card)" }}
         >
           {project.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={project.image}
               alt={project.title}
-              className="w-full h-full object-cover"
+              fill
+              sizes="100vw"
+              className="object-cover"
               style={{ objectPosition: "center 30%" }}
+              priority
             />
           ) : (
             <>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 
 export default function About() {
@@ -48,12 +49,14 @@ export default function About() {
               style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}
             >
                 {/* Illustrated portrait */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/about/prasanna-portrait.png"
+              <Image
+                src="/images/about/prasanna-portrait.webp"
                 alt="Prasanna Chaurasia"
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
                 style={{ objectPosition: "80% center" }}
+                loading="lazy"
               />
               {/* Gold overlay tint */}
               <div
