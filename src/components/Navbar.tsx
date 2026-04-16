@@ -49,7 +49,7 @@ export default function Navbar() {
       >
         <div className="max-w-screen-2xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group" aria-label="Home">
+          <Link href="/" className="flex items-center gap-4 group" aria-label="Home" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
             <div className="relative w-6 h-6 flex items-center justify-center">
               <div
                 className="absolute w-5 h-5 border transition-all duration-500 group-hover:rotate-90"
@@ -105,13 +105,13 @@ export default function Navbar() {
           </ul>
 
           {/* Right — status + mobile toggle */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-shrink-0">
             {/* Urban Matrix company link */}
             <a
               href={URBAN_MATRIX_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden lg:flex items-center gap-2 px-3 py-1.5 text-xs tracking-[0.2em] uppercase transition-all duration-300"
+              className="hidden lg:flex items-center gap-2 px-3 py-1.5 text-xs tracking-[0.2em] uppercase transition-all duration-300 flex-shrink-0"
               style={{
                 border: "1px solid var(--border-accent)",
                 background: "rgba(200,169,110,0.05)",
@@ -131,11 +131,12 @@ export default function Navbar() {
             </a>
 
             <div
-              className="hidden lg:flex items-center gap-2 px-3 py-1.5 text-xs tracking-[0.2em] uppercase"
+              className="hidden lg:flex items-center gap-2 px-3 py-1.5 text-xs tracking-[0.2em] uppercase flex-shrink-0"
               style={{
                 border: "1px solid var(--border-accent)",
                 background: "rgba(200,169,110,0.05)",
                 color: "var(--accent)",
+                whiteSpace: "nowrap",
               }}
             >
               <span

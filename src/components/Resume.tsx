@@ -123,6 +123,29 @@ export default function Resume() {
       style={{ borderTop: "1px solid var(--border)" }}
     >
       <div className="max-w-7xl mx-auto">
+        {/* Headline stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px mb-16" style={{ background: "var(--border)" }}>
+          {[
+            { value: "6+", label: "Years Experience" },
+            { value: "ISO 19650", label: "BIM Certified" },
+            { value: "LOD 500", label: "BIM Proficiency" },
+            { value: "UK", label: "Based in Manchester" },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className="flex flex-col items-center justify-center py-8 px-4 text-center"
+              style={{ background: "var(--bg-card)" }}
+            >
+              <span className="text-2xl md:text-3xl font-extralight mb-1" style={{ color: "var(--accent)" }}>
+                {stat.value}
+              </span>
+              <span className="text-xs tracking-widest uppercase" style={{ color: "var(--text-secondary)" }}>
+                {stat.label}
+              </span>
+            </div>
+          ))}
+        </div>
+
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
@@ -180,7 +203,7 @@ export default function Resume() {
                 style={{ background: "var(--border)" }}
               />
 
-              <div className="space-y-10 pl-8">
+              <div className="space-y-16 pl-8">
                 {experience.map((exp, i) => (
                   <div key={i} className="relative">
                     <div

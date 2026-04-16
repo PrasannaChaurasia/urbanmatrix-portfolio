@@ -33,7 +33,7 @@ export default function VisualStatement() {
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
     const tick = () => {
-      const t = 0.06; // interpolation speed — lower = smoother
+      const t = 0.14; // interpolation speed — lower = smoother
       currentRef.current.x = lerp(currentRef.current.x, targetRef.current.x, t);
       currentRef.current.y = lerp(currentRef.current.y, targetRef.current.y, t);
       currentRef.current.norm = lerp(currentRef.current.norm, targetRef.current.norm, t);
@@ -41,8 +41,8 @@ export default function VisualStatement() {
       const { x, y, norm } = currentRef.current;
 
       // Canvas rotation
-      const rotX = 52 - y * 4;
-      const rotZ = -22 + x * 4;
+      const rotX = 52 - y * 6;
+      const rotZ = -22 + x * 6;
       canvas.style.transform = `rotateX(${rotX}deg) rotateZ(${rotZ}deg) scale(1)`;
 
       // Layer parallax + opacity morphing

@@ -191,8 +191,8 @@ export default function ModelViewer() {
         <div className="flex flex-col xl:flex-row gap-0" style={{ border: "1px solid var(--border)" }}>
 
           {/* Left — 3D canvas (60%) */}
-          <div className="flex-1 min-h-[500px] xl:min-h-[620px] relative" style={{ background: "var(--bg-primary)" }}>
-            <Canvas camera={{ position: [5, 3.5, 5], fov: 48 }} gl={{ antialias: true }}>
+          <div className="flex-1 min-h-[500px] xl:min-h-[620px] relative" style={{ background: "var(--bg-primary)", willChange: "transform" }}>
+            <Canvas key={wireframe ? "wire" : "solid"} camera={{ position: [5, 3.5, 5], fov: 48 }} gl={{ antialias: true }}>
               <Suspense fallback={null}>
                 <Scene wireframe={wireframe} />
               </Suspense>

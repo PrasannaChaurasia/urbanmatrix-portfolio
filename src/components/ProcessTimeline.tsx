@@ -7,38 +7,37 @@ const steps = [
     number: "01",
     phase: "Concept",
     title: "AI-Driven Ideation",
-    description: "Rapid concept generation using xFigura, Midjourney, and computational design tools to explore spatial possibilities.",
+    description: "Rapid concept generation using xFigura, Midjourney, and computational design tools to explore spatial possibilities beyond convention.",
     tags: ["xFigura", "AI Render", "Parametric"],
-    icon: "◈",
+    image: "/images/projects/resilient-nexus-hero.webp",
   },
   {
     number: "02",
     phase: "BIM",
     title: "BIM Coordination",
-    description: "ISO 19650-compliant BIM development in Revit across all RIBA stages — federated models, clash detection, and full documentation.",
+    description: "ISO 19650-compliant BIM development in Revit across all RIBA stages — federated models, clash detection, and full construction documentation.",
     tags: ["Revit", "Navisworks", "ISO 19650"],
-    icon: "◉",
+    image: "/images/projects/veridian-elan-hero.webp",
   },
   {
     number: "03",
     phase: "Render",
     title: "Visualisation",
-    description: "Photorealistic renders, walkthroughs, and immersive VR experiences using D5 Render, Lumion, Enscape, and 3D Vista.",
+    description: "Photorealistic renders, architectural walkthroughs, and immersive experiences using D5 Render, Lumion, Enscape, and 3D Vista.",
     tags: ["D5 Render", "Lumion", "Enscape"],
-    icon: "◎",
+    image: "/images/projects/aeon-flux-hero.webp",
   },
   {
     number: "04",
     phase: "Deliver",
     title: "Construction Delivery",
-    description: "End-to-end project delivery — coordinated construction documentation, site oversight, and handover to specification.",
-    tags: ["AutoCAD", "Primavera", "Quality"],
-    icon: "◇",
+    description: "End-to-end project delivery — coordinated construction documentation, site oversight, quality control, and handover to specification.",
+    tags: ["AutoCAD", "Primavera P6", "Quality"],
+    image: "/images/projects/chogala-hero.webp",
   },
 ];
 
 export default function ProcessTimeline() {
-  const sectionRef = useRef<HTMLElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -52,128 +51,86 @@ export default function ProcessTimeline() {
           }
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+      { threshold: 0.1 }
     );
-
     itemsRef.current.forEach((el) => { if (el) observer.observe(el); });
     return () => observer.disconnect();
   }, []);
 
   return (
     <section
-      ref={sectionRef}
-      className="section-padding overflow-hidden"
+      className="section-padding"
       style={{ background: "var(--bg-primary)", borderTop: "1px solid var(--border)" }}
     >
-      <div className="max-w-screen-xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px w-8" style={{ background: "var(--accent)" }} />
-              <p className="text-xs tracking-[0.5em] uppercase" style={{ color: "var(--accent)" }}>
-                How I Work
-              </p>
+              <p className="text-xs tracking-[0.5em] uppercase" style={{ color: "var(--accent)" }}>How I Work</p>
             </div>
             <h2 className="text-4xl md:text-5xl font-extralight leading-tight">
               Design{" "}
-              <span style={{ color: "transparent", WebkitTextStroke: "1px var(--accent)" }}>
-                Process
-              </span>
+              <span style={{ color: "transparent", WebkitTextStroke: "1px var(--accent)" }}>Process</span>
             </h2>
           </div>
-          <p className="text-sm max-w-xs" style={{ color: "var(--text-secondary)", lineHeight: "1.9" }}>
+          <p className="text-sm max-w-sm" style={{ color: "var(--text-secondary)", lineHeight: "1.9" }}>
             From first sketch to final handover — a disciplined, technology-driven pipeline.
           </p>
         </div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Connecting line (desktop) */}
-          <div
-            className="hidden lg:block absolute top-12 left-0 right-0 h-px"
-            style={{ background: "linear-gradient(90deg, transparent, rgba(200,169,110,0.25) 15%, rgba(200,169,110,0.25) 85%, transparent)" }}
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
-            {steps.map((step, i) => (
-              <div
-                key={step.number}
-                ref={(el) => { itemsRef.current[i] = el; }}
-                style={{
-                  opacity: 0,
-                  transform: "translateY(40px)",
-                  transition: `opacity 0.7s ease ${i * 0.15}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 0.15}s`,
-                  borderRight: i < steps.length - 1 ? "1px solid var(--border)" : "none",
-                  paddingLeft: "0",
-                  paddingRight: "0",
-                }}
-                className="relative px-8 pt-0 pb-10 lg:pt-6"
-              >
-                {/* Number + icon */}
-                <div className="flex items-center gap-4 mb-6">
-                  <div
-                    className="relative w-10 h-10 flex items-center justify-center flex-shrink-0"
-                    style={{
-                      background: "rgba(200,169,110,0.08)",
-                      border: "1px solid rgba(200,169,110,0.3)",
-                    }}
-                  >
-                    <span style={{ color: "var(--accent)", fontSize: "1rem" }}>{step.icon}</span>
-                    {/* Connector dot on the line */}
-                    <div
-                      className="hidden lg:block absolute -top-[calc(1.5rem+1px)] left-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
-                      style={{ background: "var(--accent)", boxShadow: "0 0 8px rgba(200,169,110,0.6)" }}
-                    />
-                  </div>
-                  <div>
-                    <span
-                      className="text-xs font-mono tracking-[0.3em] uppercase"
-                      style={{ color: "var(--accent)" }}
-                    >
-                      {step.number}
-                    </span>
-                    <span
-                      className="ml-2 text-xs tracking-widest uppercase"
-                      style={{ color: "var(--text-secondary)" }}
-                    >
-                      {step.phase}
-                    </span>
-                  </div>
+        {/* Steps */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ background: "var(--border)" }}>
+          {steps.map((step, i) => (
+            <div
+              key={step.number}
+              ref={(el) => { itemsRef.current[i] = el; }}
+              style={{
+                opacity: 0,
+                transform: "translateY(32px)",
+                transition: `opacity 0.7s ease ${i * 0.12}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 0.12}s`,
+                background: "var(--bg-primary)",
+              }}
+            >
+              {/* Image */}
+              <div className="relative w-full overflow-hidden" style={{ height: "200px" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={step.image}
+                  alt={step.phase}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45) grayscale(0.3)" }}
+                />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 40%, var(--bg-primary) 100%)" }} />
+                <div className="absolute top-5 left-6">
+                  <span className="text-xs font-mono tracking-[0.4em] uppercase" style={{ color: "var(--accent)" }}>
+                    {step.number} · {step.phase}
+                  </span>
                 </div>
+              </div>
 
-                <h3
-                  className="text-xl font-light mb-3"
-                  style={{ color: "var(--text-primary)" }}
-                >
+              {/* Content */}
+              <div className="p-8 pt-4">
+                <h3 className="text-xl font-light mb-4" style={{ color: "var(--text-primary)" }}>
                   {step.title}
                 </h3>
-                <p
-                  className="text-sm leading-relaxed mb-5"
-                  style={{ color: "var(--text-secondary)", lineHeight: "1.8" }}
-                >
+                <p className="text-sm mb-6" style={{ color: "var(--text-secondary)", lineHeight: "1.85" }}>
                   {step.description}
                 </p>
-
-                {/* Tags */}
                 <div className="flex flex-wrap gap-2">
                   {step.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs px-2.5 py-1 tracking-wider"
-                      style={{
-                        background: "rgba(200,169,110,0.06)",
-                        color: "var(--accent)",
-                        border: "1px solid rgba(200,169,110,0.15)",
-                      }}
+                      className="text-xs px-3 py-1.5 tracking-wider"
+                      style={{ background: "rgba(200,169,110,0.07)", color: "var(--accent)", border: "1px solid rgba(200,169,110,0.15)" }}
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

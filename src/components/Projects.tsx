@@ -55,13 +55,13 @@ export default function Projects() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-px" style={{ background: "var(--border)" }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-0">
           {filtered.map((project) => (
             <Link
               key={project.id}
               href={`/projects/${project.slug}`}
               className="project-card group block"
-              style={{ background: project.color }}
+              style={{ background: project.color, border: "1px solid var(--border)" }}
             >
               {/* Image area */}
               <div className="relative aspect-video overflow-hidden" style={{ background: "var(--bg-secondary)" }}>

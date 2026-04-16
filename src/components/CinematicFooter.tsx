@@ -3,12 +3,7 @@
 import * as React from "react";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const STYLES = `
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
@@ -154,28 +149,6 @@ const MarqueeItem = () => (
 );
 
 export default function CinematicFooter() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const giantTextRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const linksRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !wrapperRef.current) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(giantTextRef.current,
-        { y: "10vh", scale: 0.8, opacity: 0 },
-        { y: "0vh", scale: 1, opacity: 1, ease: "power1.out",
-          scrollTrigger: { trigger: wrapperRef.current, start: "top 80%", end: "bottom bottom", scrub: 1 } }
-      );
-      gsap.fromTo([headingRef.current, linksRef.current],
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.15, ease: "power3.out",
-          scrollTrigger: { trigger: wrapperRef.current, start: "top 40%", end: "bottom bottom", scrub: 1 } }
-      );
-    }, wrapperRef);
-    return () => ctx.revert();
-  }, []);
-
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const navLinks = [
@@ -189,113 +162,110 @@ export default function CinematicFooter() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
-      <div
-        ref={wrapperRef}
-        className="relative cf-wrapper"
-        style={{ height: "60vh", clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
+      <footer
+        className="relative cf-wrapper w-full flex flex-col justify-between overflow-hidden"
+        style={{
+          background: "#080808",
+          color: "#ece4e1",
+          borderTop: "1px solid rgba(200,169,110,0.15)",
+          position: "relative",
+        }}
       >
-        <footer
-          className="fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-hidden"
-          style={{ background: "#080808", color: "#ece4e1" }}
+        {/* Aurora + grid */}
+        <div className="cf-aurora absolute left-1/2 top-1/2 h-[55vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 cf-breathe rounded-[50%] blur-[90px] pointer-events-none z-0" />
+        <div className="cf-grid absolute inset-0 z-0 pointer-events-none" />
+
+        {/* Giant bg text */}
+        <div
+          className="cf-bg-text absolute -bottom-[5vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none"
         >
-          {/* Aurora + grid */}
-          <div className="cf-aurora absolute left-1/2 top-1/2 h-[55vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 cf-breathe rounded-[50%] blur-[90px] pointer-events-none z-0" />
-          <div className="cf-grid absolute inset-0 z-0 pointer-events-none" />
+          URBAN MATRIX
+        </div>
 
-          {/* Giant bg text */}
-          <div
-            ref={giantTextRef}
-            className="cf-bg-text absolute -bottom-[5vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none"
+        {/* Marquee strip */}
+        <div
+          className="relative top-0 left-0 w-full overflow-hidden py-3 z-10 -rotate-2 scale-110 mt-8"
+          style={{
+            borderTop: "1px solid rgba(200,169,110,0.1)",
+            borderBottom: "1px solid rgba(200,169,110,0.1)",
+            background: "rgba(8,8,8,0.6)",
+            backdropFilter: "blur(8px)",
+          }}
+        >
+          <div className="flex w-max cf-marquee text-xs font-bold tracking-[0.3em] uppercase">
+            <MarqueeItem /><MarqueeItem />
+          </div>
+        </div>
+
+        {/* Main content */}
+        <div className="relative z-10 flex flex-col items-center justify-center px-6 py-20 w-full max-w-5xl mx-auto">
+          <h2
+            className="text-5xl md:text-8xl font-black cf-text-glow tracking-tighter mb-12 text-center"
           >
-            URBAN MATRIX
+            Let&rsquo;s Collaborate
+          </h2>
+
+          <div className="flex flex-col items-center gap-6 w-full">
+            {/* Primary links */}
+            <div className="flex flex-wrap justify-center gap-4">
+              <MagneticButton
+                as="a"
+                href="/contact"
+                className="cf-pill px-10 py-5 rounded-full font-semibold text-sm flex items-center gap-3"
+              >
+                <span style={{ color: "#c8a96e" }}>◆</span>
+                Get In Touch
+              </MagneticButton>
+              <MagneticButton
+                as="a"
+                href="/projects"
+                className="cf-pill px-10 py-5 rounded-full font-semibold text-sm flex items-center gap-3"
+              >
+                <span style={{ color: "#c8a96e" }}>◇</span>
+                View Projects
+              </MagneticButton>
+            </div>
+
+            {/* Nav links */}
+            <div className="flex flex-wrap justify-center gap-3 mt-2">
+              {navLinks.map((link) => (
+                <MagneticButton
+                  key={link.href}
+                  as={Link}
+                  href={link.href}
+                  className="cf-pill px-6 py-2.5 rounded-full text-xs tracking-widest uppercase"
+                >
+                  {link.label}
+                </MagneticButton>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="text-xs tracking-widest uppercase order-2 md:order-1" style={{ color: "rgba(236,228,225,0.3)" }}>
+            © {new Date().getFullYear()} Prasanna Chaurasia · Urban Matrix. All rights reserved.
           </div>
 
-          {/* Marquee strip */}
-          <div
-            className="absolute top-10 left-0 w-full overflow-hidden py-3 z-10 -rotate-2 scale-110"
-            style={{
-              borderTop: "1px solid rgba(200,169,110,0.1)",
-              borderBottom: "1px solid rgba(200,169,110,0.1)",
-              background: "rgba(8,8,8,0.6)",
-              backdropFilter: "blur(8px)",
-            }}
+          <div className="cf-pill px-5 py-2.5 rounded-full flex items-center gap-2 order-1 md:order-2 cursor-default text-xs font-semibold tracking-widest uppercase">
+            Crafted with{" "}
+            <span className="cf-heartbeat mx-1" style={{ color: "#c8a96e", fontSize: "1rem" }}>❤</span>
+            {" "}by{" "}
+            <span style={{ color: "#c8a96e", marginLeft: "4px" }}>Urban Matrix</span>
+          </div>
+
+          <MagneticButton
+            as="button"
+            onClick={scrollToTop}
+            className="cf-pill w-11 h-11 rounded-full flex items-center justify-center group order-3"
           >
-            <div className="flex w-max cf-marquee text-xs font-bold tracking-[0.3em] uppercase">
-              <MarqueeItem /><MarqueeItem />
-            </div>
-          </div>
-
-          {/* Main content */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 mt-16 w-full max-w-5xl mx-auto">
-            <h2
-              ref={headingRef}
-              className="text-5xl md:text-8xl font-black cf-text-glow tracking-tighter mb-12 text-center"
-            >
-              Let&rsquo;s Collaborate
-            </h2>
-
-            <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
-              {/* Primary links */}
-              <div className="flex flex-wrap justify-center gap-4">
-                <MagneticButton
-                  as="a"
-                  href="/contact"
-                  className="cf-pill px-10 py-5 rounded-full font-semibold text-sm flex items-center gap-3"
-                >
-                  <span style={{ color: "#c8a96e" }}>◆</span>
-                  Get In Touch
-                </MagneticButton>
-                <MagneticButton
-                  as="a"
-                  href="/projects"
-                  className="cf-pill px-10 py-5 rounded-full font-semibold text-sm flex items-center gap-3"
-                >
-                  <span style={{ color: "#c8a96e" }}>◇</span>
-                  View Projects
-                </MagneticButton>
-              </div>
-
-              {/* Nav links */}
-              <div className="flex flex-wrap justify-center gap-3 mt-2">
-                {navLinks.map((link) => (
-                  <MagneticButton
-                    key={link.href}
-                    as={Link}
-                    href={link.href}
-                    className="cf-pill px-6 py-2.5 rounded-full text-xs tracking-widest uppercase"
-                  >
-                    {link.label}
-                  </MagneticButton>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom bar */}
-          <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-xs tracking-widest uppercase order-2 md:order-1" style={{ color: "rgba(236,228,225,0.3)" }}>
-              © {new Date().getFullYear()} Prasanna Chaurasia · Urban Matrix. All rights reserved.
-            </div>
-
-            <div className="cf-pill px-5 py-2.5 rounded-full flex items-center gap-2 order-1 md:order-2 cursor-default text-xs font-semibold tracking-widest uppercase">
-              Crafted with{" "}
-              <span className="cf-heartbeat mx-1" style={{ color: "#c8a96e", fontSize: "1rem" }}>❤</span>
-              {" "}by{" "}
-              <span style={{ color: "#c8a96e", marginLeft: "4px" }}>Urban Matrix</span>
-            </div>
-
-            <MagneticButton
-              as="button"
-              onClick={scrollToTop}
-              className="cf-pill w-11 h-11 rounded-full flex items-center justify-center group order-3"
-            >
-              <svg className="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-1.5" fill="none" stroke="#c8a96e" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-              </svg>
-            </MagneticButton>
-          </div>
-        </footer>
-      </div>
+            <svg className="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-1.5" fill="none" stroke="#c8a96e" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+          </MagneticButton>
+        </div>
+      </footer>
     </>
   );
 }
