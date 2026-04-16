@@ -19,13 +19,11 @@ function TwistedTower({ wireframe }: { wireframe: boolean }) {
 
   return (
     <group ref={groupRef}>
-      {/* Base slab */}
       <mesh position={[0, -0.04, 0]}>
         <boxGeometry args={[4.2, 0.08, 4.2]} />
         <meshStandardMaterial color="#111111" metalness={0.4} roughness={0.6} wireframe={wireframe} />
       </mesh>
 
-      {/* Twisted floors */}
       {Array.from({ length: floors }).map((_, i) => {
         const t = i / floors;
         const twist = t * Math.PI * 1.4;
@@ -45,7 +43,6 @@ function TwistedTower({ wireframe }: { wireframe: boolean }) {
         );
       })}
 
-      {/* Glass façade strips */}
       {Array.from({ length: floors - 1 }).map((_, i) => {
         const t = i / floors;
         const twist = t * Math.PI * 1.4;
@@ -65,19 +62,16 @@ function TwistedTower({ wireframe }: { wireframe: boolean }) {
         );
       })}
 
-      {/* Spire */}
       <mesh position={[0, floors * floorH + 0.25, 0]}>
         <coneGeometry args={[0.06, 0.75, 6]} />
         <meshStandardMaterial color="#c8a96e" metalness={0.9} roughness={0.05} wireframe={wireframe} />
       </mesh>
 
-      {/* Primary orbital ring */}
       <mesh position={[0, floors * floorH * 0.5, 0]} rotation={[Math.PI / 2.2, 0, 0]}>
         <torusGeometry args={[1.9, 0.012, 6, 80]} />
         <meshStandardMaterial color="#c8a96e" metalness={0.9} roughness={0.1} />
       </mesh>
 
-      {/* Secondary orbital ring */}
       <mesh position={[0, floors * floorH * 0.5, 0]} rotation={[Math.PI / 3, Math.PI / 4, 0]}>
         <torusGeometry args={[2.3, 0.007, 6, 80]} />
         <meshStandardMaterial color="#c8a96e" metalness={0.9} roughness={0.1} transparent opacity={0.4} />
@@ -136,10 +130,8 @@ function Scene({ wireframe }: { wireframe: boolean }) {
       <directionalLight position={[-4, 5, -4]} intensity={0.5} color="#4466aa" />
       <pointLight position={[0, 6, 0]} intensity={1.0} color="#c8a96e" distance={12} />
       <pointLight position={[3, 1, 3]} intensity={0.4} color="#c8a96e" distance={8} />
-
       <TwistedTower wireframe={wireframe} />
       <FloatingParticles />
-
       <Grid
         position={[0, -0.1, 0]}
         args={[12, 12]}
@@ -153,7 +145,6 @@ function Scene({ wireframe }: { wireframe: boolean }) {
         fadeStrength={1}
         infiniteGrid
       />
-
       <Environment preset="city" />
       <OrbitControls
         enablePan={false}
@@ -166,6 +157,21 @@ function Scene({ wireframe }: { wireframe: boolean }) {
     </>
   );
 }
+
+const MODEL_SPECS = [
+  { label: "Type",       value: "Parametric Tower" },
+  { label: "Floors",     value: "22 Levels" },
+  { label: "Twist",      value: "252° Total Rotation" },
+  { label: "Geometry",   value: "Computational Design" },
+  { label: "Renderer",   value: "React Three Fiber" },
+  { label: "Engine",     value: "Three.js r165" },
+];
+
+const CONTROLS = [
+  { key: "Drag",         desc: "Orbit / Rotate view" },
+  { key: "Scroll",       desc: "Zoom in / out" },
+  { key: "Auto",         desc: "Auto-rotating (slow)" },
+];
 
 export default function ModelViewer() {
   const [wireframe, setWireframe] = useState(false);
@@ -181,81 +187,137 @@ export default function ModelViewer() {
       }}
     >
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div>
-            <p className="text-xs tracking-[0.5em] uppercase mb-4" style={{ color: "var(--accent)" }}>
-              Interactive
-            </p>
-            <h2 className="text-4xl md:text-5xl font-extralight">
-              3D <span style={{ color: "var(--accent)" }}>Models</span>
-            </h2>
-            <p className="mt-3 text-sm" style={{ color: "var(--text-secondary)" }}>
-              Drag to rotate · Scroll to zoom · Auto-rotating
-            </p>
-          </div>
+        {/* Split layout: 60% canvas / 40% info */}
+        <div className="flex flex-col xl:flex-row gap-0" style={{ border: "1px solid var(--border)" }}>
 
-          <div className="flex gap-3">
-            <button
-              onClick={() => setWireframe(false)}
-              className="px-4 py-2 text-xs tracking-widest uppercase border transition-all duration-200"
+          {/* Left — 3D canvas (60%) */}
+          <div className="flex-1 min-h-[500px] xl:min-h-[620px] relative" style={{ background: "var(--bg-primary)" }}>
+            <Canvas camera={{ position: [5, 3.5, 5], fov: 48 }} gl={{ antialias: true }}>
+              <Suspense fallback={null}>
+                <Scene wireframe={wireframe} />
+              </Suspense>
+            </Canvas>
+
+            {/* Overlay labels */}
+            <div className="absolute top-5 left-5">
+              <p className="text-xs tracking-[0.35em] uppercase font-mono" style={{ color: "rgba(200,169,110,0.6)" }}>
+                Twisted Tower — Model 01
+              </p>
+            </div>
+            <div className="absolute bottom-5 right-5 text-right">
+              <p className="text-xs tracking-widest uppercase" style={{ color: "rgba(200,169,110,0.35)" }}>
+                React Three Fiber · Three.js
+              </p>
+            </div>
+
+            {/* View mode badge */}
+            <div
+              className="absolute top-5 right-5 text-xs px-2.5 py-1 tracking-widest uppercase"
               style={{
-                borderColor: !wireframe ? "var(--accent)" : "var(--border)",
-                color: !wireframe ? "var(--accent)" : "var(--text-secondary)",
-                background: !wireframe ? "rgba(200,169,110,0.08)" : "transparent",
+                background: "rgba(8,8,8,0.75)",
+                border: "1px solid rgba(200,169,110,0.2)",
+                color: "var(--accent)",
+                backdropFilter: "blur(8px)",
               }}
             >
-              Solid
-            </button>
-            <button
-              onClick={() => setWireframe(true)}
-              className="px-4 py-2 text-xs tracking-widest uppercase border transition-all duration-200"
-              style={{
-                borderColor: wireframe ? "var(--accent)" : "var(--border)",
-                color: wireframe ? "var(--accent)" : "var(--text-secondary)",
-                background: wireframe ? "rgba(200,169,110,0.08)" : "transparent",
-              }}
-            >
-              Wireframe
-            </button>
+              {wireframe ? "Wireframe" : "Solid"}
+            </div>
+          </div>
+
+          {/* Right — info panel (40%) */}
+          <div
+            className="xl:w-[38%] flex-shrink-0 flex flex-col"
+            style={{ borderLeft: "1px solid var(--border)", background: "var(--bg-card)" }}
+          >
+            {/* Model title */}
+            <div className="px-8 py-7" style={{ borderBottom: "1px solid var(--border)" }}>
+              <p className="text-xs tracking-[0.5em] uppercase mb-2" style={{ color: "var(--accent)" }}>
+                Parametric Architecture
+              </p>
+              <h3 className="text-2xl font-extralight" style={{ color: "var(--text-primary)" }}>
+                Twisted Tower
+              </h3>
+              <p className="text-sm mt-2" style={{ color: "var(--text-secondary)", lineHeight: "1.7" }}>
+                Computationally generated twisting high-rise with gold accent floors, orbital rings, and parametric glass façade — created entirely in Three.js.
+              </p>
+            </div>
+
+            {/* Specifications */}
+            <div className="px-8 py-6" style={{ borderBottom: "1px solid var(--border)" }}>
+              <p className="text-xs tracking-[0.4em] uppercase mb-4" style={{ color: "var(--text-secondary)" }}>
+                Specifications
+              </p>
+              <dl className="space-y-3">
+                {MODEL_SPECS.map((spec) => (
+                  <div key={spec.label} className="flex justify-between items-baseline">
+                    <dt className="text-xs tracking-wider uppercase" style={{ color: "var(--text-secondary)" }}>{spec.label}</dt>
+                    <dd className="text-xs font-mono" style={{ color: "var(--accent)" }}>{spec.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+
+            {/* Controls guide */}
+            <div className="px-8 py-6" style={{ borderBottom: "1px solid var(--border)" }}>
+              <p className="text-xs tracking-[0.4em] uppercase mb-4" style={{ color: "var(--text-secondary)" }}>
+                Controls
+              </p>
+              <div className="space-y-2.5">
+                {CONTROLS.map((c) => (
+                  <div key={c.key} className="flex items-center gap-3">
+                    <span
+                      className="text-xs px-2 py-0.5 font-mono flex-shrink-0"
+                      style={{ background: "rgba(200,169,110,0.1)", color: "var(--accent)", border: "1px solid rgba(200,169,110,0.2)" }}
+                    >
+                      {c.key}
+                    </span>
+                    <span className="text-xs" style={{ color: "var(--text-secondary)" }}>{c.desc}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* View toggle buttons */}
+            <div className="px-8 py-6" style={{ borderBottom: "1px solid var(--border)" }}>
+              <p className="text-xs tracking-[0.4em] uppercase mb-4" style={{ color: "var(--text-secondary)" }}>
+                Display Mode
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setWireframe(false)}
+                  className="flex-1 py-2.5 text-xs tracking-widest uppercase border transition-all duration-200"
+                  style={{
+                    borderColor: !wireframe ? "var(--accent)" : "var(--border)",
+                    color: !wireframe ? "var(--accent)" : "var(--text-secondary)",
+                    background: !wireframe ? "rgba(200,169,110,0.08)" : "transparent",
+                  }}
+                >
+                  Solid
+                </button>
+                <button
+                  onClick={() => setWireframe(true)}
+                  className="flex-1 py-2.5 text-xs tracking-widest uppercase border transition-all duration-200"
+                  style={{
+                    borderColor: wireframe ? "var(--accent)" : "var(--border)",
+                    color: wireframe ? "var(--accent)" : "var(--text-secondary)",
+                    background: wireframe ? "rgba(200,169,110,0.08)" : "transparent",
+                  }}
+                >
+                  Wireframe
+                </button>
+              </div>
+            </div>
+
+            {/* Footer note */}
+            <div className="px-8 py-5 mt-auto">
+              <p className="text-xs" style={{ color: "var(--text-secondary)", lineHeight: "1.7" }}>
+                Demo model built with Three.js. Drop{" "}
+                <span style={{ color: "var(--accent)" }}>.glb / .gltf</span> files into{" "}
+                <span style={{ color: "var(--accent)" }}>public/models/</span> to load real project models.
+              </p>
+            </div>
           </div>
         </div>
-
-        {/* Canvas */}
-        <div
-          className="w-full relative"
-          style={{
-            height: "65vh",
-            minHeight: "450px",
-            border: "1px solid var(--border)",
-            background: "var(--bg-primary)",
-          }}
-        >
-          <Canvas camera={{ position: [5, 3.5, 5], fov: 48 }} gl={{ antialias: true }}>
-            <Suspense fallback={null}>
-              <Scene wireframe={wireframe} />
-            </Suspense>
-          </Canvas>
-
-          <div
-            className="absolute top-4 left-4 text-xs tracking-widest uppercase"
-            style={{ color: "var(--text-secondary)", opacity: 0.5 }}
-          >
-            Twisted Tower — Parametric Demo
-          </div>
-          <div
-            className="absolute bottom-4 right-4 text-xs tracking-widest uppercase"
-            style={{ color: "var(--text-secondary)", opacity: 0.5 }}
-          >
-            React Three Fiber · Three.js
-          </div>
-        </div>
-
-        <p className="mt-6 text-sm text-center" style={{ color: "var(--text-secondary)" }}>
-          Demo model. Drop your own{" "}
-          <span style={{ color: "var(--accent)" }}>.glb / .gltf</span> files into{" "}
-          <span style={{ color: "var(--accent)" }}>public/models/</span> to showcase real work.
-        </p>
       </div>
     </section>
   );

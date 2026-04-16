@@ -2,6 +2,52 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowDown } from "lucide-react";
+import { Typewriter } from "@/components/ui/typewriter";
+
+const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%";
+
+function useScramble(text: string, delay = 400) {
+  const [display, setDisplay] = useState(text.replace(/./g, " "));
+  const frameRef = useRef(0);
+
+  useEffect(() => {
+    let start: number | null = null;
+    const total = 900; // ms to fully resolve
+    const chars = text.split("");
+
+    const animate = (ts: number) => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / total, 1);
+      const resolved = Math.floor(progress * chars.length);
+
+      const out = chars.map((ch, i) => {
+        if (ch === " ") return " ";
+        if (i < resolved) return ch;
+        return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+      });
+
+      setDisplay(out.join(""));
+      if (progress < 1) frameRef.current = requestAnimationFrame(animate);
+    };
+
+    const timer = setTimeout(() => {
+      frameRef.current = requestAnimationFrame(animate);
+    }, delay);
+
+    return () => {
+      clearTimeout(timer);
+      cancelAnimationFrame(frameRef.current);
+    };
+  }, [text, delay]);
+
+  return display;
+}
+
+const FLOAT_CARDS = [
+  { src: "/images/projects/aeon-flux-hero.webp",       label: "Aeon Flux",       award: "Futurly 2025 — Featured",   top: "18%", right: "3%",  rotate: "8deg",  delay: "0s"    },
+  { src: "/images/projects/resilient-nexus-hero.webp", label: "Resilient Nexus", award: "City Futures 2025 — Winner", top: "48%", right: "6%",  rotate: "-5deg", delay: "0.3s"  },
+  { src: "/images/projects/veridian-elan-hero.webp",   label: "Veridian Élan",   award: "BIM Excellence",             top: "70%", right: "1%",  rotate: "4deg",  delay: "0.6s"  },
+];
 
 function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -82,6 +128,8 @@ export default function Hero() {
   const [mounted, setMounted] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const sectionRef = useRef<HTMLElement>(null);
+  const scrambledFirst = useScramble(mounted ? "PRASANNA" : "        ", 500);
+  const scrambledLast = useScramble(mounted ? "CHAURASIA" : "         ", 700);
 
   useEffect(() => {
     setMounted(true);
@@ -186,18 +234,26 @@ export default function Hero() {
           }}
         >
           <div className="h-px w-12" style={{ background: "var(--accent)" }} />
-          <span
+          <Typewriter
+            words={[
+              "BIM Architect",
+              "AI Design Lead",
+              "Parametric Designer",
+              "Global Competition Winner",
+              "Urban Planner",
+              "ISO 19650 Certified",
+            ]}
+            speed={70}
+            delayBetweenWords={2200}
             className="text-xs tracking-[0.5em] uppercase"
-            style={{ color: "var(--accent)" }}
-          >
-            BIM Architect · AI Enthusiast · Global Competition Winner
-          </span>
+            cursorChar="_"
+          />
         </div>
 
-        {/* Giant name */}
+        {/* Giant name with scramble effect */}
         <div className="overflow-hidden mb-3">
           <h1
-            className="font-extralight leading-none"
+            className="font-extralight leading-none font-mono"
             style={{
               fontSize: "clamp(52px, 11vw, 160px)",
               letterSpacing: "-0.02em",
@@ -206,13 +262,13 @@ export default function Hero() {
               transition: "transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s",
             }}
           >
-            Prasanna
+            {scrambledFirst}
           </h1>
         </div>
 
         <div className="overflow-hidden mb-6">
           <h1
-            className="font-extralight leading-none"
+            className="font-extralight leading-none font-mono"
             style={{
               fontSize: "clamp(52px, 11vw, 160px)",
               letterSpacing: "-0.02em",
@@ -222,7 +278,7 @@ export default function Hero() {
               transition: "transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s",
             }}
           >
-            Chaurasia
+            {scrambledLast}
           </h1>
         </div>
 
@@ -325,7 +381,7 @@ export default function Hero() {
         <div className="flex flex-wrap items-center gap-8 pt-6">
           {[
             { value: "6+", label: "Years Experience" },
-            { value: "15+", label: "Projects Delivered" },
+            { value: "100+", label: "Projects Delivered" },
             { value: "30+", label: "Tools & Technologies" },
             { value: "4", label: "Academic Degrees" },
           ].map((stat) => (
@@ -381,20 +437,53 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Side label */}
-      <div
-        className="hidden lg:block absolute right-12 top-1/2 pointer-events-none"
-        style={{
-          transform: "rotate(90deg) translateX(-50%)",
-          transformOrigin: "right center",
-          opacity: mounted ? 0.35 : 0,
-          transition: "opacity 1s ease 1.5s",
-        }}
-      >
-        <span className="text-xs tracking-[0.45em] uppercase font-mono" style={{ color: "var(--text-secondary)" }}>
-          Prasanna Chaurasia · BIM Architect
-        </span>
+      {/* Floating glassmorphism project cards */}
+      <div className="hidden xl:block">
+        {FLOAT_CARDS.map((card, i) => (
+          <div
+            key={i}
+            className="absolute pointer-events-none z-20"
+            style={{
+              top: card.top,
+              right: card.right,
+              width: "190px",
+              opacity: mounted ? 1 : 0,
+              transform: mounted
+                ? `rotate(${card.rotate}) translate(${mousePos.x * -10}px, ${mousePos.y * -7}px)`
+                : `rotate(${card.rotate}) translateY(30px)`,
+              transition: `opacity 1s ease ${card.delay}, transform 1.2s cubic-bezier(0.16,1,0.3,1) ${card.delay}`,
+            }}
+          >
+            <div
+              style={{
+                borderRadius: "16px",
+                overflow: "hidden",
+                border: "1px solid rgba(200,169,110,0.2)",
+                background: "rgba(8,8,8,0.6)",
+                backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
+                boxShadow: "0 24px 48px -12px rgba(0,0,0,0.7), inset 0 1px 0 rgba(200,169,110,0.12)",
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={card.src}
+                alt={card.label}
+                style={{ width: "100%", height: "110px", objectFit: "cover", display: "block", filter: "brightness(0.75) saturate(0.8)" }}
+              />
+              <div style={{ padding: "10px 12px 11px" }}>
+                <p style={{ fontSize: "0.6rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "#c8a96e", marginBottom: "3px" }}>
+                  {card.award}
+                </p>
+                <p style={{ fontSize: "0.7rem", fontWeight: 500, color: "#ece4e1", letterSpacing: "0.05em" }}>
+                  {card.label}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
+
     </section>
   );
 }

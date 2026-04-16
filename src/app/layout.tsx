@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import CinematicFooter from "@/components/CinematicFooter";
 import LoadingScreen from "@/components/LoadingScreen";
 import AmbientAudioPlayer from "@/components/AmbientAudioPlayer";
 
@@ -34,7 +34,7 @@ export default function RootLayout({
         <LoadingScreen />
         <Navbar />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <CinematicFooter />
         <AmbientAudioPlayer />
       </body>
     </html>

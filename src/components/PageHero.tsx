@@ -8,7 +8,7 @@ interface PageHeroProps {
 export default function PageHero({ label, title, highlight, subtitle }: PageHeroProps) {
   return (
     <section
-      className="relative pt-40 pb-20 px-6 grid-bg overflow-hidden"
+      className="relative pt-28 md:pt-36 pb-20 px-6 grid-bg overflow-hidden"
       style={{ borderBottom: "1px solid var(--border)" }}
     >
       {/* Glow */}

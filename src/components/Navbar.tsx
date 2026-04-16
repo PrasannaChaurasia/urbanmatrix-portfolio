@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,21 +19,12 @@ const navLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const lastScrollY = useRef(0);
   const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 60);
-      if (y > 120) {
-        setHidden(y > lastScrollY.current + 5);
-      } else {
-        setHidden(false);
-      }
-      lastScrollY.current = y;
+      setScrolled(window.scrollY > 60);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -46,8 +37,8 @@ export default function Navbar() {
       <nav
         className="fixed top-0 left-0 right-0 z-50"
         style={{
-          transform: hidden ? "translateY(-100%)" : "translateY(0)",
-          transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, border-color 0.4s ease",
+          transform: "translateY(0)",
+          transition: "background 0.4s ease, border-color 0.4s ease",
           background: scrolled ? "rgba(8,8,8,0.94)" : "transparent",
           backdropFilter: scrolled ? "blur(28px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(28px)" : "none",

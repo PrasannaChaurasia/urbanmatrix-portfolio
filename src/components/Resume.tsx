@@ -138,7 +138,7 @@ export default function Resume() {
             </h2>
           </div>
           <a
-            href="/Prasanna Chaurasia_CV.pdf"
+            href="/Prasanna-Chaurasia-CV.pdf"
             download
             className="flex items-center gap-2 px-6 py-3 text-sm tracking-widest uppercase transition-all duration-300"
             style={{
